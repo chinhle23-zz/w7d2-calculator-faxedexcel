@@ -8,13 +8,45 @@ function containOperator(text) {
     return text.includes("/") || text.includes("*") || text.includes("-") || text.includes("+")
 }
 
+function displayEvalText(text) {
+    let newArray;
+    let newText;
+    if (text.includes("*")) {
+        newArray = text.split("*");
+            // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/split
+        newArray.splice(1, 0, "*");
+            // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/splice
+        newText = newArray.join(" ");
+            // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/join
+        return newText;
+    } else if (text.includes("/")) {
+        newArray = text.split("/");
+        newArray.splice(1, 0, "/");
+        newText = newArray.join(" ");
+        return newText;
+    } else if (text.includes("-")) {
+        newArray = text.split("-");
+        newArray.splice(1, 0, "-");
+        newText = newArray.join(" ");
+        return newText;
+    } else if (text.includes("+")) {
+        newArray = text.split("+");
+        newArray.splice(1, 0, "+");
+        newText = newArray.join(" ");
+        return newText;
+    } else {
+        return text;
+    }
+}
+
 function calcThis() {
     const numButtons = document.querySelectorAll('.digit');
     const operatorButtons = document.querySelectorAll('.operator');
     const clearButton = document.querySelector('.clear');
     const equalButton = document.querySelector('.equal');
     const decimalButton = document.querySelector('.decimal');
-    const display = document.querySelector('p');
+    const display = document.querySelector('.text');
+    const evalDisplay = document.querySelector('.eval_text');
     let evalText = "";
     let lastClicked = "";
     for (let button of numButtons) {
@@ -29,8 +61,9 @@ function calcThis() {
                 // if the last button clicked was an operator, then reset the display
                 display.textContent = "";
             }
-             display.textContent += button.textContent;
+            display.textContent += button.textContent;
             evalText += button.textContent;
+            evalDisplay.textContent = displayEvalText(evalText);
             lastClicked = "number"
         });
     }
@@ -44,11 +77,13 @@ function calcThis() {
                     display.textContent = calculate(evalText);
                     evalText = display.textContent
                     evalText += "*";
+                    evalDisplay.textContent = displayEvalText(evalText);
                     lastClicked = "operator"
                 }
                 if (lastClicked === "number" || lastClicked === "equal") {
                     // if the last button clicked was a number or equal, then add the operator to the evalText
                     evalText += "*";
+                    evalDisplay.textContent = displayEvalText(evalText);
                     lastClicked = "operator"
                 }
                 if (lastClicked === "operator") {
@@ -56,6 +91,7 @@ function calcThis() {
                     evalText = evalText.substring(0, evalText.length - 1);
                         // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/substring
                     evalText += "*";
+                    evalDisplay.textContent = displayEvalText(evalText);
                     lastClicked = "operator"
                 }
             });
@@ -66,15 +102,18 @@ function calcThis() {
                     display.textContent = calculate(evalText);
                     evalText = display.textContent
                     evalText += button.textContent;
+                    evalDisplay.textContent = displayEvalText(evalText);
                     lastClicked = "operator"
                 }
                 if (lastClicked === "number" || lastClicked === "equal") {
                     evalText += button.textContent;
+                    evalDisplay.textContent = displayEvalText(evalText);
                     lastClicked = "operator"
                 }
                 if (lastClicked === "operator") {
                     evalText = evalText.substring(0, evalText.length - 1);
                     evalText += button.textContent;
+                    evalDisplay.textContent = displayEvalText(evalText);
                     lastClicked = "operator"
                 }
             });
@@ -85,13 +124,16 @@ function calcThis() {
         if (lastClicked === "equal" || evalText === "") {
             display.textContent = "0";
             evalText = "0";
+            evalDisplay.textContent = displayEvalText(evalText);
         }
         if (lastClicked === "operator") {
             display.textContent = "0";
             evalText += "0";
+            evalDisplay.textContent = displayEvalText(evalText);
         }
         display.textContent += decimalButton.textContent;
         evalText += decimalButton.textContent;
+        evalDisplay.textContent = displayEvalText(evalText);
         lastClicked = "decimal"
     })
 
@@ -99,6 +141,7 @@ function calcThis() {
         // clears everything
         display.textContent = "";
         evalText = "";
+        evalDisplay.textContent = displayEvalText(evalText);
         lastClicked = "clear";
     })
 
@@ -107,6 +150,7 @@ function calcThis() {
             // if the last button clicked was a number and the text to be evaluated contains an operator, then calculate and display
             display.textContent = calculate(evalText);
             evalText = display.textContent
+            evalDisplay.textContent = displayEvalText(evalText);
             lastClicked = "equal"
         }
     })

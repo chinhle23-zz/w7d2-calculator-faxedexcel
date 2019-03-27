@@ -25,24 +25,36 @@
     font-size: 2rem;
 }
 
-.text {
+.display {
     background-color: aliceblue;
     color: black;
     text-align: right;
-    line-height: 4rem;
     width: 30rem;
-    height: 4rem;
     max-width: 75%;
     padding-right: .5rem;
 }
-.digit {
+
+.eval_text {
+    height: 1rem;
+    font-size: 1rem;
+}
+
+.text {
+    line-height: 4rem;
+    height: 3rem;
+    font-size: 2.5rem;
+    font-weight: bold;
+}
+
+.clear {
     width: 30rem;
     height: 4rem;
     max-width: 25%;
     font-size: 1.75rem;
+    background-color: pink;
 }
 
-.clear {
+.digit {
     width: 30rem;
     height: 4rem;
     max-width: 25%;
@@ -69,6 +81,7 @@
     height: 4rem;
     max-width: 25%;
     font-size: 1.75rem;
+    background-color: lightgreen;
 }
 
 .digit:hover, .clear:hover, .operator:hover, .equal:hover {
