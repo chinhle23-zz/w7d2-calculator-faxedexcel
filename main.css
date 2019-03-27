@@ -1,0 +1,70 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Open Sans';
+}
+
+.main {
+    padding: 6rem;
+    background-image: url(http://www.sciencefriday.com/wp-content/uploads/2016/08/Artboard-1.png);
+}
+.calculator {
+    background-color: rgb(23, 62, 115);
+    color: white;
+    margin: auto;
+    width: 30rem;
+    padding: 1rem;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+}
+.display_row {
+    max-width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    font-size: 2rem;
+}
+
+.text {
+    background-color: aliceblue;
+    color: black;
+    text-align: right;
+    line-height: 4rem;
+    width: 30rem;
+    height: 4rem;
+    max-width: 75%;
+    padding-right: .5rem;
+}
+.digit {
+    width: 30rem;
+    height: 4rem;
+    max-width: 25%;
+    font-size: 1.75rem;
+}
+
+.clear {
+    width: 30rem;
+    height: 4rem;
+    max-width: 25%;
+    font-size: 1.75rem;
+}
+
+.operator {
+    width: 30rem;
+    height: 4rem;
+    max-width: 25%;
+    font-size: 1.75rem;
+    background-color: orange;
+}
+
+.equal {
+    width: 30rem;
+    height: 4rem;
+    max-width: 25%;
+    font-size: 1.75rem;
+}
+
+.digit:hover, .clear:hover, .operator:hover, .equal:hover {
+    background-color: lightblue;
+}
