@@ -3,43 +3,77 @@
 function calculate(text) {
     return math.eval(text);
 }
+
+function containOperator(char) {
+    switch (char) {
+        case "/":
+        case "*":
+        case "-":
+        case "+":
+            return true
+    }
+    return false
+}
+
 function calcThis() {
     const numButtons = document.querySelectorAll('.digit');
     const operatorButtons = document.querySelectorAll('.operator');
     const clearButton = document.querySelector('.clear')
     const equalButton = document.querySelector('.equal')
-    const paragraph = document.querySelector('p');
+    const display = document.querySelector('p');
     let evalText = "";
+    let calculatedText = "";
     for (let button of numButtons) {
-        paragraph.textContent = "";
         button.addEventListener('click', function(){
-            paragraph.textContent += button.textContent;
-                // https://developer.mozilla.org/en-US/docs/Web/API/Node/textContent
+            if (calculatedText != "" && !containOperator(evalText[evalText.length-1])) {
+                // if equal button is clicked and next button clicked is a number button, then reset everything
+                display.textContent = "";
+                    // https://developer.mozilla.org/en-US/docs/Web/API/Node/textContent
+                evalText = "";
+                calculatedText = "";
+            }
+            if (containOperator(evalText[evalText.length-1])) {
+                // if operator button is clicked and next button clicked is a number button, then reset the display
+                display.textContent = "";
+            }
+            display.textContent += button.textContent;
             evalText += button.textContent;
         });
     }
 
     for (let button of operatorButtons) {
-        paragraph.textContent = "";
         if (button.textContent === "x") {
             button.addEventListener('click', function(){
-                evalText += "*";
+                if (!containOperator(evalText[evalText.length - 1])) {
+                    evalText += "*";
+                } else {
+                    evalText = evalText.substring(0, evalText.length - 1);
+                        // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/substring
+                }
             });
         } else {
             button.addEventListener('click', function(){
-                evalText += button.textContent;
+                if (!containOperator(evalText[evalText.length-1])) {
+                    evalText += button.textContent;
+                } else {
+                    evalText = evalText.substring(0, evalText.length - 1);
+                }
             });
         }
     }
 
     clearButton.addEventListener('click', function(){
-        paragraph.textContent = "";
+        display.textContent = "";
         evalText = "";
+        calculatedText = "";
     })
 
     equalButton.addEventListener('click', function(){
-        paragraph.textContent = calculate(evalText);
-        evalText = paragraph.textContent
+        if (evalText != "") {
+            display.textContent = calculate(evalText);
+            evalText = display.textContent
+            calculatedText = evalText
+        }
     })
 }
 
